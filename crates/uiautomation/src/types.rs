@@ -963,8 +963,8 @@ impl core::convert::TryFrom<windows::Win32::UI::Accessibility::TreeScope> for Tr
     }
 }
 
-impl Into<windows::Win32::UI::Accessibility::TreeScope> for TreeScope {
-    fn into(self) -> windows::Win32::UI::Accessibility::TreeScope {
+impl Into<i32> for TreeScope {
+    fn into(self) -> i32 {
         let bits: i32 = match self {
             Self::None => 0,
             Self::Element => 1,
@@ -975,6 +975,13 @@ impl Into<windows::Win32::UI::Accessibility::TreeScope> for TreeScope {
             Self::Subtree => 7,
             Self::Custom(v) => v,
         };
+        bits
+    }
+}
+
+impl Into<windows::Win32::UI::Accessibility::TreeScope> for TreeScope {
+    fn into(self) -> windows::Win32::UI::Accessibility::TreeScope {
+        let bits: i32 = self.into();
         windows::Win32::UI::Accessibility::TreeScope(bits)
     }
 }
